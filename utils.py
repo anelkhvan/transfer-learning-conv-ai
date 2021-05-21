@@ -47,7 +47,8 @@ def get_dataset(tokenizer, dataset_path, dataset_cache):
                 return tokenizer.convert_tokens_to_ids(tokenizer.tokenize(obj))
             if isinstance(obj, dict):
                 return dict((n, tokenize(o)) for n, o in obj.items())
-            return list(tokenize(o) for o in obj)
+            limit = 100
+            return list(tokenize(o) for o in obj[:limit])
         dataset = tokenize(dataset)
         torch.save(dataset, dataset_cache)
     return dataset
